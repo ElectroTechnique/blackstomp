@@ -347,15 +347,13 @@ bool AC101::setup(int sda, int scl, uint32_t frequency)
 
   // Eenable Output mixer and DAC
   ok &= WriteReg(OMIXER_DACA_CTRL, 0xff80);
-
-/*
-	// Enable Headphone output
+	
+  // Enable Headphone output
 	ok &= WriteReg(HPOUT_CTRL, 0xc3c1);	
 	ok &= WriteReg(HPOUT_CTRL, 0xcb00);
 	delay(10);
 	ok &= WriteReg(HPOUT_CTRL, 0xfbc0);
 	ok &= SetVolHeadphone(60);
-*/
  
 	// Enable Speaker output
 	ok &= WriteReg(SPKOUT_CTRL, 0xeabd);
