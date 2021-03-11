@@ -34,7 +34,8 @@
 typedef enum
 {
   IM_LR,    //input mode = line-in L, line-in R
-  IM_LMIC   //input mode = Line-in L, Microphone
+  IM_LMIC,   //input mode = Line-in L, Microphone
+  IM_LRMIC //input mode = L and R Microphones
 } 
 INPUT_MODE;
 

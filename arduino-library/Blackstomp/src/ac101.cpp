@@ -138,9 +138,11 @@ const uint8_t regs[] = {
 };
 
 #define LEFT_MIC1_ENABIT		6
+#define LEFT_MIC2_ENABIT		5
 #define LEFT_LINELEFT_ENABIT	3
 #define LEFT_LINEDIFF_ENABIT	4
 #define RIGHT_MIC1_ENABIT		13
+#define RIGHT_MIC2_ENABIT		12
 #define RIGHT_LINERIGHT_ENABIT	10
 #define RIGHT_LINEDIFF_ENABIT	11
 
@@ -202,6 +204,15 @@ bool AC101::OmixerLeftMic1(bool select)
   return WriteReg(OMIXER_SR, val);
 }
 
+bool AC101::OmixerLeftMic2(bool select)
+{
+  uint16_t val = ReadReg(OMIXER_SR);
+  if(select)
+    val |= (uint16_t)1<<5;
+  else val &= ~((uint16_t)1<<5);
+  return WriteReg(OMIXER_SR, val);
+}
+
 bool AC101::OmixerRightLineRight(bool select)
 {
   uint16_t val = ReadReg(OMIXER_SR);
@@ -229,7 +240,14 @@ bool AC101::OmixerRightMic1(bool select)
   return WriteReg(OMIXER_SR, val);
 }
 
-
+bool AC101::OmixerRightMic2(bool select)
+{
+  uint16_t val = ReadReg(OMIXER_SR);
+  if(select)
+    val |= (uint16_t)1<<12;
+  else val &= ~((uint16_t)1<<12);
+  return WriteReg(OMIXER_SR, val);
+}
 
 bool AC101::LeftMic1(bool select)
 {
@@ -246,6 +264,24 @@ bool AC101::RightMic1(bool select)
 	if(select)
 		val |= (uint16_t)1<<RIGHT_MIC1_ENABIT;
 	else val &= ~((uint16_t)1<<RIGHT_MIC1_ENABIT);
+	return WriteReg(ADC_SRC, val);
+}
+
+bool AC101::LeftMic2(bool select)
+{
+	uint16_t val = ReadReg(ADC_SRC);
+	if(select)
+		val |= (uint16_t)1<<LEFT_MIC2_ENABIT;
+	else val &= ~((uint16_t)1<<LEFT_MIC2_ENABIT);
+	return WriteReg(ADC_SRC, val);
+}
+ 
+bool AC101::RightMic2(bool select)
+{
+	uint16_t val = ReadReg(ADC_SRC);
+	if(select)
+		val |= (uint16_t)1<<RIGHT_MIC2_ENABIT;
+	else val &= ~((uint16_t)1<<RIGHT_MIC2_ENABIT);
 	return WriteReg(ADC_SRC, val);
 }
 
@@ -347,13 +383,15 @@ bool AC101::setup(int sda, int scl, uint32_t frequency)
 
   // Eenable Output mixer and DAC
   ok &= WriteReg(OMIXER_DACA_CTRL, 0xff80);
-	
-  // Enable Headphone output
+
+
+	// Enable Headphone output
 	ok &= WriteReg(HPOUT_CTRL, 0xc3c1);	
 	ok &= WriteReg(HPOUT_CTRL, 0xcb00);
 	delay(10);
 	ok &= WriteReg(HPOUT_CTRL, 0xfbc0);
 	ok &= SetVolHeadphone(60);
+
  
 	// Enable Speaker output
 	ok &= WriteReg(SPKOUT_CTRL, 0xeabd);

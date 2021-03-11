@@ -106,21 +106,25 @@ class AC101
   
 	//leftchannel input selector methods
 	bool LeftMic1(bool select);		//left channel mic1 select
+	bool LeftMic2(bool select);		//left channel mic2 select
 	bool LeftLineDiff(bool select);	//left channel line difference (line Left- Line Right)
 	bool LeftLineLeft(bool select);	//left channel line (L)
 
 	//left output mixer source select/deselect
 	bool OmixerLeftLineLeft(bool select);
 	bool OmixerLeftMic1(bool select);
+	bool OmixerLeftMic2(bool select);
 	bool OmixerLeftDacLeft(bool select);
 
 	//right output mixer source select/deselect
 	bool OmixerRightLineRight(bool select);
 	bool OmixerRightMic1(bool select);
+	bool OmixerRightMic2(bool select);
 	bool OmixerRightDacRight(bool select);
 
 	//rightchannel input selector methods
 	bool RightMic1(bool select);		//right channel mic1 select
+	bool RightMic2(bool select);		//right channel mic2 select
 	bool RightLineDiff(bool select);	//right channel line difference (line Left- Line Right)
 	bool RightLineRight(bool select);	//right channel line (R)
 

@@ -447,12 +447,18 @@ void codecsetup_task(void* arg)
     _codec.LeftLineLeft(true);
     _codec.RightLineRight(true);
   }
-  else
+  else if(_module->inputMode == IM_LMIC)
   {
     _codec.LeftLineLeft(true);
     _codec.RightMic1(true);
   }
-  
+  else
+  {
+    _codec.LeftMic1(true);
+    _codec.RightMic1(true);
+	_codec.LeftMic2(true);
+    _codec.RightMic2(true);
+  }
   vTaskDelete(NULL);
 }
 
@@ -674,10 +680,17 @@ bool analogBypass(bool bypass)
       _codec.LeftLineLeft(!bypass);
       _codec.RightLineRight(!bypass);
     }
-    else
+    else if(_module->inputMode == IM_LMIC)
     {
       _codec.LeftLineLeft(!bypass);
       _codec.RightMic1(!bypass);
+    }
+	else
+	{
+      _codec.LeftMic1(!bypass);
+      _codec.RightMic1(!bypass);
+      _codec.LeftMic2(!bypass);
+      _codec.RightMic2(!bypass);
     }
 
     //connect/disconnect the line/mic input to output mixer
@@ -687,11 +700,17 @@ bool analogBypass(bool bypass)
       _codec.OmixerRightLineRight(bypass);
 
     }
-    else //inputMode = IM_LMIC
+    else if(_module->inputMode == IM_LMIC)
     {
        _codec.OmixerRightMic1(bypass);
        _codec.OmixerLeftLineLeft(bypass);
     }
+	else {
+       _codec.OmixerLeftMic1(bypass);
+       _codec.OmixerRightMic1(bypass);
+       _codec.OmixerLeftMic2(bypass);
+       _codec.OmixerRightMic2(bypass);	   
+	}
     return true;
 }
 
@@ -706,10 +725,17 @@ bool analogSoftBypass(bool bypass)
       _codec.LeftLineLeft(!bypass);
       _codec.RightLineRight(!bypass);
     }
+	else if(_module->inputMode == IM_LMIC)
+	{
+	  _codec.LeftLineLeft(!bypass);
+      _codec.RightMic1(!bypass);	
+	}
     else
     {
-      _codec.LeftLineLeft(!bypass);
+      _codec.LeftMic1(!bypass);
       _codec.RightMic1(!bypass);
+      _codec.LeftMic2(!bypass);
+      _codec.RightMic2(!bypass);
     }
 
     //connect/disconnect the line/mic input to output mixer
@@ -719,11 +745,18 @@ bool analogSoftBypass(bool bypass)
       _codec.OmixerRightLineRight(bypass);
 
     }
-    else //inputMode = IM_LMIC
+	else if(_module->inputMode == IM_LMIC)
     {
        _codec.OmixerRightMic1(bypass);
        _codec.OmixerLeftLineLeft(bypass);
     }
+	else 
+	{
+       _codec.OmixerLeftMic1(bypass);
+       _codec.OmixerRightMic1(bypass);
+       _codec.OmixerLeftMic2(bypass);
+       _codec.OmixerRightMic2(bypass);	
+	}	
     return true;
 }
 
